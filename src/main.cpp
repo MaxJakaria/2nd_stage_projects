@@ -1,24 +1,39 @@
 #include <Arduino.h>
-#define BUILTIN_LED 2
-#define RED_LED 13
-#define WHITE_LED 12
+
+#define digitalPIN_a 15
+#define LED_PIN 12
+#define analogPIN_LDR 13
 
 void setup()
 {
-  pinMode(BUILTIN_LED, OUTPUT);
-  pinMode(RED_LED, OUTPUT);
-  pinMode(WHITE_LED, OUTPUT);
+  Serial.begin(115200);
+
+  pinMode(digitalPIN_a, INPUT);
+  pinMode(LED_PIN, OUTPUT);
+
+  Serial.println("Starting Serial Monitoring of Digital and Analog Pins...");
 }
 
 void loop()
 {
-  digitalWrite(BUILTIN_LED, HIGH);
-  digitalWrite(RED_LED, HIGH);
-  delay(150);
-  digitalWrite(RED_LED, LOW);
-  delay(100);
-  digitalWrite(WHITE_LED, HIGH);
-  delay(150);
-  digitalWrite(WHITE_LED, LOW);
-  delay(500);
+  int a = digitalRead(digitalPIN_a);
+  int LDR = analogRead(analogPIN_LDR);
+  if (a == 1)
+  {
+    digitalWrite(LED_PIN, HIGH);
+  }
+  else
+  {
+    if (LDR > 3000)
+    {
+      digitalWrite(LED_PIN, LOW);
+    }
+    else
+    {
+      digitalWrite(LED_PIN, HIGH);
+    }
+  }
+
+  Serial.printf("PIN A: %d\n-> LDR: %d\n", a, LDR);
+  delay(5000);
 }
