@@ -1,18 +1,24 @@
 #include <Arduino.h>
+#define BUILTIN_LED 2
+#define RED_LED 13
+#define WHITE_LED 12
 
-// put function declarations here:
-int myFunction(int, int);
-
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+void setup()
+{
+  pinMode(BUILTIN_LED, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+  pinMode(WHITE_LED, OUTPUT);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void loop()
+{
+  digitalWrite(BUILTIN_LED, HIGH);
+  digitalWrite(RED_LED, HIGH);
+  delay(150);
+  digitalWrite(RED_LED, LOW);
+  delay(100);
+  digitalWrite(WHITE_LED, HIGH);
+  delay(150);
+  digitalWrite(WHITE_LED, LOW);
+  delay(500);
 }
