@@ -1,60 +1,56 @@
-#include <IRremote.hpp>
-
-const int IR_RECEIVER_PIN = 15;
-const int pins[] = {27, 14, 12, 13};
-bool checkStatus[] = {false, false, false, false};
+#include <Arduino.h>
+#include <Wire.h> // Include the Wire library for I2C communication
 
 void setup()
 {
-  for (int i = 0; i < 4; i++)
-  {
-    pinMode(pins[i], OUTPUT);
-  }
-  Serial.begin(115200);
-  IrReceiver.begin(IR_RECEIVER_PIN, ENABLE_LED_FEEDBACK);
+  Wire.begin();                           // Initialize the I2C bus as a master
+  Serial.begin(115200);                   // Initialize the serial communication at 115200 baud rate
+  Serial.println("\nI2C Device Scanner"); // Print a header message
 }
 
 void loop()
 {
-  if (IrReceiver.decode())
+  byte error, address; // Variables to hold error status and I2C address
+  int nDevices;        // Variable to count the number of I2C devices found
+
+  Serial.println("Scanning..."); // Print a message indicating the start of the scan
+  nDevices = 0;                  // Reset device count
+
+  // Loop through all possible I2C addresses (1 to 126)
+  for (address = 1; address < 127; address++)
   {
-    String ir = String(IrReceiver.decodedIRData.command, HEX);
-    Serial.println(ir);
+    Wire.beginTransmission(address); // Start I2C transmission to the current address
+    error = Wire.endTransmission();  // End the transmission and capture the error code
 
-    if (ir == "40")
-    {
-      for (int i = 3; i >= 0; i--)
+    if (error == 0)
+    {                                                 // If no error occurred
+      Serial.print("I2C device found at address 0x"); // Print the device found message
+      if (address < 16)
       {
-        if (checkStatus[i])
-        {
-          digitalWrite(pins[i], LOW);
-          checkStatus[i] = false;
-          break;
-        }
+        Serial.print("0"); // Print a leading zero for addresses less than 0x10
       }
+      Serial.println(address, HEX); // Print the address in hexadecimal format
+      nDevices++;                   // Increment the device count
     }
-
-    if (ir == "c")
-    {
-      digitalWrite(pins[0], HIGH);
-      checkStatus[0] = true;
+    else if (error == 4)
+    {                                              // If an unknown error occurred
+      Serial.print("Unknown error at address 0x"); // Print the error message
+      if (address < 16)
+      {
+        Serial.print("0"); // Print a leading zero for addresses less than 0x10
+      }
+      Serial.println(address, HEX); // Print the address in hexadecimal format
     }
-    if (ir == "18")
-    {
-      digitalWrite(pins[1], HIGH);
-      checkStatus[1] = true;
-    }
-    if (ir == "5e")
-    {
-      digitalWrite(pins[2], HIGH);
-      checkStatus[2] = true;
-    }
-    if (ir == "8")
-    {
-      digitalWrite(pins[3], HIGH);
-      checkStatus[3] = true;
-    }
-
-    IrReceiver.resume();
   }
+
+  if (nDevices == 0)
+  {                                           // If no devices were found
+    Serial.println("No I2C devices found\n"); // Print a message indicating no devices found
+  }
+  else
+  {                                         // If devices were found
+    Serial.println("Scanning Completed\n"); // Print a message indicating the scan is done
+  }
+
+  delay(5000); // Wait 5 seconds before the next scan
 }
