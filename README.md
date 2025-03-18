@@ -8,11 +8,16 @@
 
 ## [3rd Assignment](https://github.com/MaxJakaria/2nd_stage_projects/tree/90ae6a5c4ee31f03d2bbba15261b904f4b23b4bb)
 
-### This code required a library. For install that library go platformio.ini file and write 'lib_deps = IRremote'. After that save the file, the library will automatically install.
+> **This code required a library. For install that library go platformio.ini file and write _"lib_deps = IRremote"_. After that save the file, the library will automatically install.**
 
 -> IR Remote: [First of all, I have to find the button code of my remote.](https://github.com/MaxJakaria/2nd_stage_projects/tree/42862aa0cc734ac78a88c60856870a76d224b040)
 For this project I have used 4 loads, IR Remote and an IR receiver. Where the loads are control with IR remote.
 
-### 4th Assignment
+## 4th Assignment
 
 -> LCD Display: First of all, I have to scan the device address with i2c scanner. [Reference: YouTube](https://www.youtube.com/watch?v=acTGCaNllxI)
+
+> **This code required a library: _LiquidCrystal_I2C_ by Frank de Brabander**
+
+Connection LCD display -> esp32: **SDA-->D21, SCL-->D22, VCC-->VIN**
+It was a simple project. Just print something on the LCD display. Here I print a light sensor value...
