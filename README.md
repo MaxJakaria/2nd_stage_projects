@@ -15,7 +15,7 @@ For this project I have used 4 loads, IR Remote and an IR receiver. Where the lo
 
 ## 4th Assignment
 
--> LCD Display: First of all, I have to scan the device address with i2c scanner. [Reference: YouTube](https://www.youtube.com/watch?v=acTGCaNllxI)
+-> LCD Display: [First of all, I have to scan the device address with i2c scanner](https://github.com/MaxJakaria/2nd_stage_projects/tree/9dc33b75b9ece69dfbaa9b6680fcc7c40dc704b9). Reference: [YouTube](https://www.youtube.com/watch?v=acTGCaNllxI)
 
 > **This code required a library: _LiquidCrystal_I2C_ by Frank de Brabander**
 
