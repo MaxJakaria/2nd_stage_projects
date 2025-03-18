@@ -19,5 +19,5 @@ For this project I have used 4 loads, IR Remote and an IR receiver. Where the lo
 
 > **This code required a library: _LiquidCrystal_I2C_ by Frank de Brabander**
 
-Connection LCD display -> esp32: **SDA-->D21, SCL-->D22, VCC-->VIN**
+Connect LCD display to esp32: **SDA-->D21, SCL-->D22, VCC-->VIN**.
 It was a simple project. Just print something on the LCD display. Here I print a light sensor value...
